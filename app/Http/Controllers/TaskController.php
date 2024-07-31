@@ -115,7 +115,7 @@ class TaskController extends Controller
 
     public function toggleCompletion($id)
     {
-        $task = $this->ToggleTaskCompletionUseCase->execute($id);
+        $task = $this->toggleTaskCompletionUseCase->execute($id);
         if (!$task) {
             return response()->json(['message' => 'Tarea no encontrada'], 404);
         }
@@ -123,7 +123,7 @@ class TaskController extends Controller
         $presentedTask = $this->taskPresenter->present($task);
 
         return response()->json([
-            'message' => 'Task completion status toggled successfully',
+            'message' => 'Tarea cambia exitosamente!!',
             'task' => $presentedTask,
         ]);
     }

@@ -15,6 +15,7 @@ class EloquentTaskRepository implements TaskRepositoryInterface
 
         $taskModel->title = $task->title;
         $taskModel->description = $task->description;
+        $taskModel->completed = $task->completed;
         $taskModel->save();
 
         $task->id = $taskModel->id;
