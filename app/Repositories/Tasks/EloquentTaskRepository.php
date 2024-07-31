@@ -60,7 +60,24 @@ class EloquentTaskRepository implements TaskRepositoryInterface
 
     public function getCompletedTasks(): array
     {
-        $taskModels = TaskModel::where('completed', true)->get();
+        $taskModels = TaskModel::completed()->get();
+        $tasks = [];
+
+        foreach ($taskModels as $taskModel) {
+            $tasks[] = new Task(
+                $taskModel->id,
+                $taskModel->title,
+                $taskModel->description,
+                $taskModel->completed
+            );
+        }
+
+        return $tasks;
+    }
+    
+    public function getPendingTasks(): array
+    {
+        $taskModels = TaskModel::pending()->get();
         $tasks = [];
 
         foreach ($taskModels as $taskModel) {

@@ -11,4 +11,5 @@ interface TaskRepositoryInterface
     public function delete($id);
     public function getAll(): array;
     public function getCompletedTasks(): array;
+    public function getPendingTasks(): array;
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\UseCases\Tasks\{CreateTaskUseCase, UpdateTaskUseCase, DeleteTaskUseCase, ShowTaskUseCase, GetAllTasksUseCase, GetCompletedTasksUseCase};
+use App\Domains\UseCases\Tasks\{CreateTaskUseCase, UpdateTaskUseCase, DeleteTaskUseCase, ShowTaskUseCase, GetAllTasksUseCase, GetCompletedTasksUseCase, GetPendingTasksUseCase, ToggleTaskCompletionUseCase};
 use App\Presenters\Tasks\TaskPresenter;
 use Illuminate\Http\Request;
 
@@ -14,6 +14,8 @@ class TaskController extends Controller
     private $updateTaskUseCase;
     private $getAllTasksUseCase;
     private $getCompletedTasksUseCase;
+    private $getPendingTasksUseCase;
+    private $toggleTaskCompletionUseCase;
     private $taskPresenter;
 
     public function __construct(
@@ -23,6 +25,8 @@ class TaskController extends Controller
         DeleteTaskUseCase $deleteTaskUseCase, 
         GetAllTasksUseCase $getAllTasksUseCase,
         GetCompletedTasksUseCase $getCompletedTasksUseCase,
+        GetPendingTasksUseCase $getPendingTasksUseCase,
+        ToggleTaskCompletionUseCase $toggleTaskCompletionUseCase,
         TaskPresenter $taskPresenter
     )
     {
@@ -32,6 +36,8 @@ class TaskController extends Controller
         $this->showTaskUseCase = $showTaskUseCase;
         $this->getAllTasksUseCase = $getAllTasksUseCase;
         $this->getCompletedTasksUseCase = $getCompletedTasksUseCase;
+        $this->getPendingTasksUseCase = $getPendingTasksUseCase;
+        $this->toggleTaskCompletionUseCase = $toggleTaskCompletionUseCase;
         $this->taskPresenter = $taskPresenter;
     }
 
@@ -94,6 +100,31 @@ class TaskController extends Controller
 
         return response()->json([
             'tasks' => $presentedTasks,
+        ]);
+    }
+    
+    public function pending()
+    {
+        $tasks = $this->getPendingTasksUseCase->execute();
+        $presentedTasks = array_map([$this->taskPresenter, 'present'], $tasks);
+
+        return response()->json([
+            'tasks' => $presentedTasks,
+        ]);
+    }
+
+    public function toggleCompletion($id)
+    {
+        $task = $this->ToggleTaskCompletionUseCase->execute($id);
+        if (!$task) {
+            return response()->json(['message' => 'Tarea no encontrada'], 404);
+        }
+
+        $presentedTask = $this->taskPresenter->present($task);
+
+        return response()->json([
+            'message' => 'Task completion status toggled successfully',
+            'task' => $presentedTask,
         ]);
     }
 }
