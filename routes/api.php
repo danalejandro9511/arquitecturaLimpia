@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\{TaskController, CompanyController};
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +27,5 @@ Route::put('/tasks/{id}', [TaskController::class, 'update']);
 Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 Route::get('/tasks', [TaskController::class, 'index']);
 Route::patch('/tasks/{id}/toggle-completion', [TaskController::class, 'toggleCompletion']); 
+
+Route::apiResource('companies', CompanyController::class);
