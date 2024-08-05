@@ -35,4 +35,5 @@ Route::prefix('companies')->group(function () {
     Route::post('/', [CompanyController::class, 'store'])->name('companies.store');
     Route::get('/{id}', [CompanyController::class, 'show'])->name('companies.show');
     Route::put('/{id}', [CompanyController::class, 'update'])->name('companies.update');
+    Route::delete('/{id}', [CompanyController::class, 'destroy'])->name('companies.destroy');
 });

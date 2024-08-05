@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\UseCases\Companies\{CreateCompanyUseCase, UpdateCompanyUseCase, /*DeleteCompanyUseCase,*/ ShowCompanyUseCase,  GetAllCompanyUseCase};
+use App\Domains\UseCases\Companies\{CreateCompanyUseCase, UpdateCompanyUseCase, DeleteCompanyUseCase, ShowCompanyUseCase,  GetAllCompanyUseCase};
 use App\Http\Requests\{CreateCompanyRequest, UpdateCompanyRequest};
 use App\Presenters\Companies\CompanyPresenter;
-use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Models\Company;
 
 class CompanyController extends Controller
 {
     private $createCompanyUseCase;
-    //private $deleteCompanyUseCase;
+    private $deleteCompanyUseCase;
     private $showCompanyUseCase;
     private $updateCompanyUseCase;
     private $getAllCompanyUseCase;
@@ -21,47 +21,38 @@ class CompanyController extends Controller
         CreateCompanyUseCase $createCompanyUseCase, 
         ShowCompanyUseCase $showCompanyUseCase, 
         UpdateCompanyUseCase $updateCompanyUseCase, 
-        //DeleteCompanyUseCase $deleteCompanyUseCase,  */
+        DeleteCompanyUseCase $deleteCompanyUseCase,  
         GetAllCompanyUseCase $getAllCompanyUseCase,
         CompanyPresenter $companyPresenter 
     )
     {
         $this->createCompanyUseCase = $createCompanyUseCase;
         $this->updateCompanyUseCase = $updateCompanyUseCase;
-        //$this->deleteCompanyUseCase = $deleteCompanyUseCase;
+        $this->deleteCompanyUseCase = $deleteCompanyUseCase;
         $this->showCompanyUseCase = $showCompanyUseCase;
         $this->getAllCompanyUseCase = $getAllCompanyUseCase;
         $this->companyPresenter = $companyPresenter; 
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $companies = $this->getAllCompanyUseCase->execute();
         $presentedCompanies = array_map([$this->companyPresenter, 'present'], $companies);
 
         return response()->json([
-            'companies' => $presentedCompanies,
+            'empresas' => $presentedCompanies,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CreateCompanyRequest $request)
     {
         $logo = $request->file('logo');
         $company = $this->createCompanyUseCase->execute($request->name, $request->cif, $request->color, $request->address, $request->population, $request->cp, $request->phone, $request->email, $logo);
         $presentedCompany = $this->companyPresenter->present($company);
 
-        return response()->json(['message' => 'Empresa creada exitosamente!!', 'company' => $presentedCompany]);
+        return response()->json(['message' => 'Empresa creada exitosamente!!', 'empresa' => $presentedCompany]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $present_company = $this->showCompanyUseCase->execute($id);
@@ -73,9 +64,6 @@ class CompanyController extends Controller
         return response()->json(['empresa' => $presentedCompany]); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCompanyRequest $request, $id)
     {
         $logo = $request->file('logo');
@@ -91,11 +79,12 @@ class CompanyController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $company = $this->deleteCompanyUseCase->execute($id);
+
+        if (!$company) return response()->json(['message' => 'Empresa no encontrada'], 404);
+
+        return response()->json(['message' => 'Empresa eliminada exitosamente!!']);
     }
 }
