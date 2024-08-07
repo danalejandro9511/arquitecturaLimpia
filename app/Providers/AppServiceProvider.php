@@ -3,12 +3,16 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Model;
+use App\Observers\ModelObserver;
 use App\Repositories\Tasks\TaskRepositoryInterface;
 use App\Repositories\Companies\CompanyRepositoryInterface;
 use App\Repositories\Companies\ImageRepositoryInterface;
 use App\Repositories\Tasks\EloquentTaskRepository;
 use App\Repositories\Companies\EloquentCompanyRepository;
 use App\Repositories\Companies\EloquentImageRepository;
+use App\Observers\CompanyObserver;
+use App\Models\Company;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        //
+        Company::observe(CompanyObserver::class);
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('cif')->unique();
+            $table->string('cif')->nullable();
             $table->string('color',10)->default('#3e6eff');
             $table->string('address')->nullable();
             $table->string('population')->nullable();

@@ -6,6 +6,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\BaseRequest;
+use Illuminate\Validation\Rule;
 
 class CreateCompanyRequest extends BaseRequest
 {
@@ -18,7 +19,12 @@ class CreateCompanyRequest extends BaseRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'cif' => 'required|string|max:50|unique:companies,cif',
+            'cif' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('companies')->whereNull('deleted_at'),
+            ],
             'color' => 'required|string|max:7', 
             'address' => 'nullable|string|max:255',
             'population' => 'nullable|string|max:255',
