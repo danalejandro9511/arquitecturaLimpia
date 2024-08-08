@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('tax_rates', function (Blueprint $table) {
             $table->id();
-            $table->string('model');
-            $table->string('event');
-            $table->json('attributes')->nullable();
+            $table->string('name');
+            $table->decimal('percentage', 5, 2);
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('tax_rates');
     }
 };

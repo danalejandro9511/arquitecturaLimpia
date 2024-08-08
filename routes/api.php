@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{TaskController, CompanyController};
+use App\Http\Controllers\{TaskController, CompanyController, TaxRateController};
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +36,12 @@ Route::prefix('companies')->group(function () {
     Route::get('/{id}', [CompanyController::class, 'show'])->name('companies.show');
     Route::put('/{id}', [CompanyController::class, 'update'])->name('companies.update');
     Route::delete('/{id}', [CompanyController::class, 'destroy'])->name('companies.destroy');
+});
+
+Route::prefix('tax-rates')->group(function () {
+    Route::get('/', [TaxRateController::class, 'index'])->name('tax-rates.index');
+    Route::post('/', [TaxRateController::class, 'store'])->name('tax-rates.store');
+    Route::get('/{id}', [TaxRateController::class, 'show'])->name('tax-rates.show');
+    Route::put('/{id}', [TaxRateController::class, 'update'])->name('tax-rates.update');
+    Route::delete('/{id}', [TaxRateController::class, 'destroy'])->name('tax-rates.destroy');
 });

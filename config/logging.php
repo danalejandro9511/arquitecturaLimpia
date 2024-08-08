@@ -4,7 +4,7 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
-use App\Logging\DatabaseLogHandler;
+use App\Logging\DatabaseLogger;
 
 return [
 
@@ -130,8 +130,8 @@ return [
 
         'database' => [
             'driver' => 'custom',
-            'via' => DatabaseLogHandler::class,
-            'level' => 'debug', // Ajusta el nivel de logging según sea necesario
+            'via' => DatabaseLogger::class,
+            'level' => 'debug',
         ],
     ],
 

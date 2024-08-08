@@ -11,9 +11,9 @@ class DatabaseLogHandler extends AbstractProcessingHandler
     protected function write(LogRecord $record): void
     {
         Log::create([
-            'model' => $record->context['model'] ?? 'unknown',
-            'attributes' => json_encode($record->context['attributes'] ?? []),
+            'model' => $record->context['model'] ?? 'N/A',
             'event' => $record->message,
+            'attributes' => json_encode($record->context['attributes'] ?? []),
         ]);
     }
 }
