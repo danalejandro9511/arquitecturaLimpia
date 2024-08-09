@@ -69,7 +69,7 @@ class RetentionController extends Controller
 
         $presentedRetention = $this->retentionPresenter->present($retention);
 
-        return response()->json(['message' => 'Retención actualizado exitosamente!!', 'retencion' => $presentedRetention]);
+        return response()->json(['message' => 'Retención actualizada exitosamente!!', 'retencion' => $presentedRetention]);
     }
 
     public function destroy($id)
