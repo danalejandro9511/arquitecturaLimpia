@@ -34,13 +34,13 @@ class CreateRetentionRequest extends BaseRequest
     public function messages()
     {
         return [
-            'name.required' => 'El nombre la retención es obligatorio.',
-            'name.string' => 'El nombre la retención debe ser una cadena de texto.',
-            'name.max' => 'El nombre la retención no debe exceder los 255 caracteres.',
+            'name.required' => 'El nombre de la retención es obligatorio.',
+            'name.string' => 'El nombre de la retención debe ser una cadena de texto.',
+            'name.max' => 'El nombre de la retención no debe exceder los 255 caracteres.',
             
-            'percentage.required' => 'El porcentaje la retención es obligatorio.',
-            'percentage.numeric' => 'El porcentaje la retención debe ser un número.',
-            'percentage.max' => 'El porcentaje la retención no debe exceder el 100%.',
+            'percentage.required' => 'El porcentaje de la retención es obligatorio.',
+            'percentage.numeric' => 'El porcentaje de la retención debe ser un número.',
+            'percentage.max' => 'El porcentaje de la retención no debe exceder el 100%.',
         ];
     }
 }
