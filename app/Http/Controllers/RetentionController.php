@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\UseCases\Retentions\{CreateRetentionUseCase, UpdateRetentionUseCase, DeleteRetentionUseCase, ShowRetentionUseCase,  GetAllRetentionUseCase};
+use App\Domains\UseCases\Retentions\{CreateRetentionUseCase, UpdateRetentionUseCase, DeleteRetentionUseCase, ShowRetentionUseCase, GetAllRetentionUseCase};
 use App\Http\Requests\{CreateRetentionRequest, UpdateRetentionRequest};
 use App\Models\Retention;
 use App\Presenters\Retentions\RetentionPresenter;
