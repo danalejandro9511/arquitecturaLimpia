@@ -39,9 +39,7 @@ class TaxRateController extends Controller
         $taxRates = $this->getAllTaxRateUseCase->execute();
         $presentedTaxRates = array_map([$this->taxRatePresenter, 'present'], $taxRates);
 
-        return response()->json([
-            'ivas' => $presentedTaxRates,
-        ]);
+        return response()->json([ 'ivas' => $presentedTaxRates,]);
     }
 
     public function store(CreateTaxRateRequest $request)

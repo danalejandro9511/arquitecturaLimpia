@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CompanySeeder::class,
             TaxRateSeeder::class,
+            RetentionSeeder::class,
         ]);
     }
 }
