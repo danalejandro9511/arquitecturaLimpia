@@ -28,8 +28,6 @@ Route::delete('/tasks/{id}', [TaskController::class, 'delete']);
 Route::get('/tasks', [TaskController::class, 'index']);
 Route::patch('/tasks/{id}/toggle-completion', [TaskController::class, 'toggleCompletion']); 
 
-//Route::apiResource('companies', CompanyController::class);
-
 Route::prefix('companies')->group(function () {
     Route::get('/', [CompanyController::class, 'index'])->name('companies.index');
     Route::post('/', [CompanyController::class, 'store'])->name('companies.store');

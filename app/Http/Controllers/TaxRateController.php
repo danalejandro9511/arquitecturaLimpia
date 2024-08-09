@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Domains\UseCases\TaxRates\{CreateTaxRateUseCase, UpdateTaxRateUseCase, DeleteTaxRateUseCase, ShowTaxRateUseCase,  GetAllTaxRateUseCase};
-//use App\Http\Requests\{CreateCompanyRequest, UpdateCompanyRequest};
+use App\Http\Requests\{CreateTaxRateRequest, UpdateTaxRateRequest};
+use App\Models\TaxRate;
 use App\Presenters\TaxRates\TaxRatePresenter;
 use Illuminate\Http\Request;
-use App\Models\TaxRate;
 
 class TaxRateController extends Controller
 {
@@ -44,7 +44,7 @@ class TaxRateController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateTaxRateRequest $request)
     {
         $taxRate = $this->createTaxRateUseCase->execute($request->name, $request->percentage);
         $presentedTaxRate = $this->taxRatePresenter->present($taxRate);
@@ -58,10 +58,12 @@ class TaxRateController extends Controller
 
         if (!$present_taxRate) return response()->json(['message' => 'IVA no encontrado'], 404);
 
-        return response()->json(['iva' => $present_taxRate]);
+        $presentedTaxRate = $this->taxRatePresenter->present($present_taxRate);
+
+        return response()->json(['iva' => $presentedTaxRate]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateTaxRateRequest $request, $id)
     {
         $taxRate = $this->updateTaxRateUseCase->execute($id, $request->name, $request->percentage);
 

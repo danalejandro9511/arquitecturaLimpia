@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presenters\TaxtRates;
+namespace App\Presenters\TaxRates;
 
 use App\Domains\Entities\TaxRates\TaxRate;
 
